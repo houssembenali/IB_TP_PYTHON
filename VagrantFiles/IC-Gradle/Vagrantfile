@@ -1,0 +1,20 @@
+  
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "bento/ubuntu-20.10"
+  
+  config.vm.network "public_network", ip: "192.168.0.24"
+
+  # Provision
+  config.vm.provision :shell, :path => "install.sh"
+
+  # Shared folder
+  config.vm.synced_folder "project/", "/home/project", create: true
+ 
+
+
+end
