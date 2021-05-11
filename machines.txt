@@ -1,0 +1,4 @@
+host11,3,google.com,256,500,Windows XP
+host1,1,192.168.1.1,1000,1000,Windows 95
+host66,6,127.0.0.66,6000,6000,Ubuntu
+host77,192.168.1.77,5,512,500,Windows 7
