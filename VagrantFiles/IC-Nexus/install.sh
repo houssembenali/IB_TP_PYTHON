@@ -1,8 +1,5 @@
 #!/usr/bin/bash
-##jouter les hostnames
-echo 192.168.0.14 jenkins >> /etc/hosts
-echo 192.168.0.24 gradle >> /etc/hosts
-echo 192.168.0.44 nexus >> /etc/hosts
+export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update -y
 sudo apt install -y openjdk-8-jdk

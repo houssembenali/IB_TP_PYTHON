@@ -1,8 +1,5 @@
 #!/bin/bash
-##jouter les hostnames
-echo 192.168.0.14 jenkins >> /etc/hosts
-echo 192.168.0.24 gradle >> /etc/hosts
-echo 192.168.0.44 nexus >> /etc/hosts
+export DEBIAN_FRONTEND=noninteractive
 # sur la machine Jenkns
 ## On met à jour le systeme pour pouvoir insaller
     sudo apt update -y
@@ -36,4 +33,4 @@ echo 'userjob ALL=(ALL:ALL) /usr/bin/apt' | sudo EDITOR='tee -a' visudo
 
 ## Afficher à la fin de l'execution du script le contenu du fichier /var/jenkins_home/secrets/initialAdminPassword pour permettre de récupérer le mot de passe
 
-cat /var/jenkins_home/secrets/initialAdminPassword
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
