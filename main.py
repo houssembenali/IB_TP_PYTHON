@@ -11,15 +11,16 @@ import os
 ####################
 
 class Machine:
-  def __init__(self, nom,cpu,ip,ram,hdd_nb,hdd_size,os):
+  def __init__(self, nom,cpu,ip,ram,hdd_nb,hdd_size,ops):
     self.nom= nom
     self.cpu= cpu
     self.ip = ip
     self.ram= ram
     self.hdd_nb= hdd_nb
     self.hdd_size= hdd_size
-    self.os = os
+    self.ops = ops
    
+# Changement de la variable os par ops (operating system) car conflit avec class os
 # Pb de compatibilité version python
 # Houssem - peux tu regarder les lignes print(f') ce n'est plus compatible depuis python 3.5 
 # ligne 26 et 50  
@@ -48,7 +49,8 @@ def readByName(hostname):
         strReturn=""
         for row in csv_reader:
             if row[0] == hostname:
-                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
+#                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
+                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]}')
                 m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
 #                print('the row found is '+strReturn)
                 line_count += 1
@@ -61,7 +63,7 @@ def readByName(hostname):
 def create(machine):
     with open('machines.txt', mode='a',newline='') as new_host:
             machine_add = csv.writer(new_host, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            machine_add.writerow([machine.nom,machine.cpu,machine.ip,machine.ram,machine.hdd_nb,machine.hdd_size,machine.os])
+            machine_add.writerow([machine.nom,machine.cpu,machine.ip,machine.ram,machine.hdd_nb,machine.hdd_size,machine.ops])
     return ''
     
 def createOrUpdate(machine):
@@ -80,9 +82,9 @@ def find(host):
          for row in reader:
                 line_count +=1
                 if host == row[0]: # if the username shall be on column 3 (-> index 2)
-                  print ('existe dans la colon N°'+str(line_count))
+#                  print ('existe dans la colon N°'+str(line_count))
                   line_found = line_count
-    print ('ligne trouver :'+str(line_found))
+#    print ('ligne trouver :'+str(line_found))
     return line_found
 
 def delete(host):
@@ -143,7 +145,7 @@ os.system('cls')  # on windows
 OS_=["Windows","MacOs","Aix", "Debian", "Ubuntu", "RedHat","Slakeware","Suse","Gentoo","Suse","Gentoo","Solaris","Fedora"]
 	
 print ("Ce program permet de gérer les hosts")
-print ("FORMAT : nom, ip, cpu, ram, hdd, os")
+print ("FORMAT : nom,cpu, ip, ram, hdd, os")
 print ("Tapez votre choix")
 print ("1:afficher , 2:ajouter , 3:supprimer, 4:modifier")
 action = input("")
@@ -160,7 +162,7 @@ elif action=="2":
     hostname = input("Saisir nom du hote:")
 #    doublon()
 #    ip = input("Saisir l'adresse IP du hote:")
-# TEST la validite IP
+# TEST la validite IP   
 #   Boucle try exept pour validation de l'adresse IP
     while True:
         try:
@@ -176,9 +178,9 @@ elif action=="2":
     ram = input("Saisir la taille RAM du hote(en Mo):")
     hdd_nb = input("Saisir le nb de disque dur du hote:")
     hdd_size = input("Saisir la taille disque dur du hote (en Go):")
-    os = input("Saisir l'OS du hote:")
+    ops = input("Saisir l'OS du hote:")
     
-    machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,os)
+    machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
     createOrUpdate(machine)
 
 elif action=="3":
@@ -206,7 +208,7 @@ else:
     ram = input("Saisir la taille RAM du hote:")
     hdd_nb = input("Saisir le nb de disque dur du hote:")
     hdd_size = input("Saisir la taille des disques du hote:")
-    os = input("Saisir l'OS du hote:")
+    ops = input("Saisir l'OS du hote:")
 
-    machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,os)
+    machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
     createOrUpdate(machine)
