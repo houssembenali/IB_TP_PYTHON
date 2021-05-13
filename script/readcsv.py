@@ -130,7 +130,7 @@ def delete(host):
     new_file.close()
     return ''
 
-"""
+
 
 #################################
 ######## test unitair ###########
@@ -150,14 +150,26 @@ class TestStringMethods(unittest.TestCase):
                 Counter += 1
         file.close()
         self.assertEqual(readAll(), Counter)
+
+    def test_readAll2(self):
+        file = open("machines.txt","r")
+        Counter = 0
+        # Reading from file
+        Content = file.read()
+        CoList = Content.split("\n")
         
+        for i in CoList:
+            if i:
+                Counter += 1
+        file.close()
+        self.assertEqual(readAll(), 55555)
 
 if __name__ == '__main__':
     unittest.main()
-    
+  
+
+
 """
-
-
 #############################
 ########### API #############
 #############################
@@ -194,7 +206,7 @@ def deleteApi(host):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
-
+"""
 
 """
 #########################

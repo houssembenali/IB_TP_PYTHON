@@ -1,0 +1,4 @@
+build/
+.gradle/
+VagrantFiles/IC-Jenkins/.vagrant/
+VagrantFiles/IC-Nexus/.vagrant/
