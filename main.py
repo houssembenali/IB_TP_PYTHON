@@ -50,7 +50,7 @@ def readByName(hostname):
         for row in csv_reader:
             if row[0] == hostname:
 #                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
-                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]}')
+                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={getOsById(row[6])}')
                 m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
 #                print('the row found is '+strReturn)
                 line_count += 1
@@ -107,6 +107,18 @@ def delete(host):
     new_file.close()
     return ''
 
+def getOsById(id):
+    OS_Libel = ""
+
+    with open('OS_version.txt') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            if int(row[0]) == int(id):
+                OS_Libel = row[1]+" "+row[2]
+    if len(OS_Libel) == 0:
+        OS_Libel = "OS Non Disponible"    
+    return OS_Libel
+
 def doublon(host):
 # fonction extraction premiere valuer du fichier machine (hostname)
 # Lit la première ligne du fichier (entête de colonnes)
@@ -138,77 +150,119 @@ def doublon(host):
     # check and make call for specific operating system
 #    _ = call('clear' if os.name =='posix' else 'cls')
  
+
+class OPS_version:
+      def __init__(self, id,ops,version):
+        self.id= id
+        self.ops= ops
+        self.version = version
+
+def readOS():
+        #file = open('OS_Version.txt')
+        #lines = file.readlines()
+        #print (file)
+        with open("OS_Version.txt", "r") as file:
+            print(file.read()) 
+            file.close()
+def readLineOS(ops):
+        #file = open('OS_Version.txt')
+        #lines = file.readlines()
+        #print (file)
+        with open("OS_Version.txt", "r") as file:
+            line=file.readlines()[ops]
+            print(line) 
+            file.close()
+#            val1 = line[-2]
+#            val2 = line[-1]
+#            return val1, val2            
+   
 #########################
 #### INTERACTIVE ########
 #########################
-os.system('cls')  # on windows
-OS_=["Windows","MacOs","Aix", "Debian", "Ubuntu", "RedHat","Slakeware","Suse","Gentoo","Suse","Gentoo","Solaris","Fedora"]
-	
-print ("Ce program permet de gérer les hosts")
-print ("FORMAT : nom,cpu, ip, ram, hdd, os")
-print ("Tapez votre choix")
-print ("1:afficher , 2:ajouter , 3:supprimer, 4:modifier")
-action = input("")
+while True :
+        
+    print ("Ce program permet de gérer les hosts")
+    print ("FORMAT : nom,cpu, ip, ram, hdd, os")
+    print ("Tapez votre choix")
+    print ("1:afficher , 2:ajouter , 3:supprimer, 4:modifier")
+    action = input("")
 
-if action == "1":
-    os.system('cls')
-    # print ("\n" * 100) pour foctionnement Universel 
-    hostname = input("Merci de saisir le hostname a afficher:")
-    readByName(hostname)
-elif action=="2":
-    os.system('cls')
-    # print ("\n" * 100) pour foctionnement Universel 
-    print("Saisir les information de la machine a ajouter")
-    hostname = input("Saisir nom du hote:")
-#    doublon()
-#    ip = input("Saisir l'adresse IP du hote:")
-# TEST la validite IP   
-#   Boucle try exept pour validation de l'adresse IP
-    while True:
-        try:
-#            ip = '1.2.1.4'
-            ip = input("Saisir l'adresse IP du hote:")
-            ipaddress.ip_address(ip)
+    if action == "1":
+        #        os.system('cls')
+        # print ("\n" * 100) pour foctionnement Universel 
+        hostname = input("Merci de saisir le hostname a afficher:")
+        readByName(hostname)
+    elif action=="2":
+        #        os.system('cls')
+        # print ("\n" * 100) pour foctionnement Universel 
+        print("Saisir les information de la machine a ajouter")
+        hostname = input("Saisir nom du hote:")
+    #    TEst doublon() a faire
+    #    ip = input("Saisir l'adresse IP du hote:")
+    # TEST la validite IP   
+    #   Boucle try exept pour validation de l'adresse IP
+        while True:
+            try:
+                ip = input("Saisir l'adresse IP du hote:")
+                ipaddress.ip_address(ip)
+    #             x = int(input("Please enter a number: "))
+                break
+            except ValueError:
+                print("Oops! Adresse IP Invalide. Merci de saisir une IP Valide ")
 
-#             x = int(input("Please enter a number: "))
-            break
-        except ValueError:
-            print("Oops! Adresse IP Invalide. Merci de saisir une IP Valide ")
-    cpu = input("Saisir le nombre de CPU du hote:")
-    ram = input("Saisir la taille RAM du hote(en Mo):")
-    hdd_nb = input("Saisir le nb de disque dur du hote:")
-    hdd_size = input("Saisir la taille disque dur du hote (en Go):")
-    ops = input("Saisir l'OS du hote:")
-    
-    machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
-    createOrUpdate(machine)
+        cpu = input("Saisir le nombre de CPU du hote:")
+        ram = input("Saisir la taille RAM du hote(en Mo):")
+        hdd_nb = input("Saisir le nb de disque dur du hote:")
+        hdd_size = input("Saisir la taille disque dur du hote (en Go):")
+        print("Saisir lOS et la version de la machine a ajouter choix de 1 a 25")
+        # AFFICHER LE CONTENU DU FICHIER OS_version.txt
+        # Choisir l OS et la Version 
+        readOS()
+        ops = input("Saisir la version OS :")
+        # convertir la valeur OS/version 1-25 en champs caracteres OS et Version
+        # prendre la ligne saisie (1-25)
+        # enregistrer le 7eme champs (OPS) avec les champs 2 et 3 de OS_Version
+        #print (ops)
+        ops = int(ops)
+        #print (type(ops))
+        #ops_=readLineOS(ops)
+    #    ops_=readLineOS(ops)[-2]
+    #    ops_= ops+readLineOS(ops)[-1]
+            
+        machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
+        createOrUpdate(machine)
 
-elif action=="3":
-    os.system('cls')
-    hostname = input("Merci de saisir le hostname a supprimer:")
-    delete(hostname)
-else:
-    os.system('cls')  # on windows
-    print("Saisir les information de la machine a modifier, s'il n'existe pas il va êtres créer")
-    hostname = input("Saisir nom du hote:")
-    #       readByName(hostname)
-    print("****")
-    cpu = input("Saisir le nombre de CPU du hote:")
-    
-#   Boucle try exept pour validation de l'adresse IP
-    while True:
-        try:   
-            ip = input("Saisir l'adresse IP du hote:")
-            ipaddress.ip_address(ip)
+    elif action=="3":
+        #        os.system('cls')
+        hostname = input("Merci de saisir le hostname a supprimer:")
+        delete(hostname)
+    else:
+        #        os.system('cls')  # on windows
+        print("Saisir les information de la machine a modifier, s'il n'existe pas il va êtres créer")
+        hostname = input("Saisir nom du hote:")
+        #       readByName(hostname)
+        print("****")
+        cpu = input("Saisir le nombre de CPU du hote:")
+        
+    #   Boucle try exept pour validation de l'adresse IP
+        while True:
+            try:   
+                ip = input("Saisir l'adresse IP du hote:")
+                ipaddress.ip_address(ip)
 
-#             x = int(input("Please enter a number: "))
-            break
-        except ValueError:
-            print("Oops! Adresse IP Invalide. ")
-    ram = input("Saisir la taille RAM du hote:")
-    hdd_nb = input("Saisir le nb de disque dur du hote:")
-    hdd_size = input("Saisir la taille des disques du hote:")
-    ops = input("Saisir l'OS du hote:")
-
-    machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
-    createOrUpdate(machine)
+    #             x = int(input("Please enter a number: "))
+                break
+            except ValueError:
+                print("Oops! Adresse IP Invalide. ")
+        ram = input("Saisir la taille RAM du hote:")
+        hdd_nb = input("Saisir le nb de disque dur du hote:")
+        hdd_size = input("Saisir la taille des disques du hote:")
+        readOS()
+        ops = input("Saisir l'OS du hote:")
+        # convertir la valeur OS/version 1-25 en champs caracteres OS et Version
+        # prendre la ligne saisie (1-25)
+        # enregistrer le 7eme champs (OPS) avec les champs 2 et 3 de OS_Version
+        readLineOS(int(ops))
+        
+        machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
+        createOrUpdate(machine)
