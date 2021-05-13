@@ -1,5 +1,3 @@
-
-
 Modification du fichier main.py
 
 les class sont presentes
@@ -26,12 +24,14 @@ os.system('cls')
 cela a posé un pb car collision avec la variavle os pour saisir l'os de l'hote
 
 
-A FAIRE
--Il faudrait faire une bloucle generale
+Reste A FAIRE
 -un test sur l'unicité du host (s'il existe, faire comme l ip, redemander la saisie de host
 idem pour l'ip
 -un test sur l'unicité de l'ip (s'il existe, redemander la saisie de l IP
--ajouter la notion de version OS demandée
 
+Corrigé
+Gestion de version OS comme demandée
+Boucle generale ok
+recherche hote inexistant  on continue le prg, pas de sortie en erreur du script
 
 

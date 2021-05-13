@@ -50,15 +50,18 @@ def readByName(hostname):
         for row in csv_reader:
             if row[0] == hostname:
 #                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
-                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={getOsById(row[6])}')
-                m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+                print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  NB_Disk={row[4]}  Taille_Disk={row[5]}Go  OS={getOsById(row[6])}')
+#                m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
 #                print('the row found is '+strReturn)
                 line_count += 1
+#               Ajouter l'echec de la recherche d'hote
+#               si host non trouver, relancer le menu 1
+                return True 
 
     if line_count == 0:
-        print ("Hostname NOT FOUND")
-        
-    return m1
+#        print ("Hostname NOT FOUND")
+        return True
+    return True
 
 def create(machine):
     with open('machines.txt', mode='a',newline='') as new_host:
@@ -67,10 +70,8 @@ def create(machine):
     return ''
     
 def createOrUpdate(machine):
-
     if find(machine.nom) >= 0:
         delete(machine.nom)
-
     create(machine)
     return ''
 
@@ -145,11 +146,6 @@ def doublon(host):
             return 0
     datafile.close()
 
-# define clearscreen function
-#def clear():
-    # check and make call for specific operating system
-#    _ = call('clear' if os.name =='posix' else 'cls')
- 
 
 class OPS_version:
       def __init__(self, id,ops,version):
@@ -164,6 +160,7 @@ def readOS():
         with open("OS_Version.txt", "r") as file:
             print(file.read()) 
             file.close()
+
 def readLineOS(ops):
         #file = open('OS_Version.txt')
         #lines = file.readlines()
@@ -172,9 +169,6 @@ def readLineOS(ops):
             line=file.readlines()[ops]
             print(line) 
             file.close()
-#            val1 = line[-2]
-#            val2 = line[-1]
-#            return val1, val2            
    
 #########################
 #### INTERACTIVE ########
@@ -182,7 +176,8 @@ def readLineOS(ops):
 while True :
         
     print ("Ce program permet de gérer les hosts")
-    print ("FORMAT : nom,cpu, ip, ram, hdd, os")
+    print ("FORMAT : nom, cpu, ip, ram, hdd, os/version")
+    print (" ")
     print ("Tapez votre choix")
     print ("1:afficher , 2:ajouter , 3:supprimer, 4:modifier")
     action = input("")
@@ -190,8 +185,12 @@ while True :
     if action == "1":
         #        os.system('cls')
         # print ("\n" * 100) pour foctionnement Universel 
-        hostname = input("Merci de saisir le hostname a afficher:")
-        readByName(hostname)
+        search = False
+        while search == False :
+           hostname = input("Merci de saisir le hostname a afficher:")
+           search = bool(readByName(hostname))
+           print ("resultat de la recheche")
+           print (search) 
     elif action=="2":
         #        os.system('cls')
         # print ("\n" * 100) pour foctionnement Universel 
@@ -236,7 +235,7 @@ while True :
         #        os.system('cls')
         hostname = input("Merci de saisir le hostname a supprimer:")
         delete(hostname)
-    else:
+    elif action=="4":
         #        os.system('cls')  # on windows
         print("Saisir les information de la machine a modifier, s'il n'existe pas il va êtres créer")
         hostname = input("Saisir nom du hote:")
