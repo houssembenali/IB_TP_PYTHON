@@ -1,0 +1,37 @@
+
+
+Modification du fichier main.py
+
+les class sont presentes
+<trop d'erreur en créant lefichier machine.py>
+
+
+
+les 4 fonctions sont créer et fonctionnent
+
+- consulter/afficher
+- ajouter
+- supprimer
+- modifier
+
+une fonction de verification adresse IP est intégrée
+import ipaddress
+
+
+une fonction clear screen est intégrée pour clarifier le prg
+import os
+pour effacer l' ecran on execute un 
+os.system('cls')  
+
+cela a posé un pb car collision avec la variavle os pour saisir l'os de l'hote
+
+
+A FAIRE
+-Il faudrait faire une bloucle generale
+-un test sur l'unicité du host (s'il existe, faire comme l ip, redemander la saisie de host
+idem pour l'ip
+-un test sur l'unicité de l'ip (s'il existe, redemander la saisie de l IP
+-ajouter la notion de version OS demandée
+
+
+
