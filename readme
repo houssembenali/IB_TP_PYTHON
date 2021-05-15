@@ -34,4 +34,13 @@ Gestion de version OS comme demandée
 Boucle generale ok
 recherche hote inexistant  on continue le prg, pas de sortie en erreur du script
 
+Si on a le temps
+- Unicité des @ IP
+- associer une liste de disques de tailles differentes a chaque host (en cours)
+- faire la fonction saisie des disques pour une machine
+- si on supprime une machine, on supprime les entrées correspondantes dans HDD.csv
+
+- faire un compteur de nb de disque, plutot qu'unez valeur en dure
+
+
 

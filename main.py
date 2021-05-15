@@ -11,26 +11,30 @@ import os
 ####################
 
 class Machine:
-  def __init__(self, nom,cpu,ip,ram,hdd_nb,hdd_size,ops):
+  def __init__(self, nom,cpu,ip,ram,ops):
     self.nom= nom
     self.cpu= cpu
     self.ip = ip
     self.ram= ram
-    self.hdd_nb= hdd_nb
-    self.hdd_size= hdd_size
     self.ops = ops
    
 # Changement de la variable os par ops (operating system) car conflit avec class os
 # Pb de compatibilité version python
-# Houssem - peux tu regarder les lignes print(f') ce n'est plus compatible depuis python 3.5 
-# ligne 26 et 50  
-# Because f in front of strings (f-strings) are only for versions above python 3.5
 	#print("Column names are",", ".join(row))
     #print(f'Column names are {", ".join(row)}')
 
+class Hdd:
+    hdd_nb = 1
+    hdd_size = 1
+
+    def __init__(self,hdd_nb, hdd_size):
+       self.hdd_nb = hdd_nb
+       self.hdd_nb = hdd_size
+
+
 def readAllv2():
     
-    with open('machines.txt') as csv_file:
+    with open('machines.csv') as csv_file:
 #        csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         str_machine =""
@@ -43,20 +47,24 @@ def readAllv2():
 
 
 def readByName(hostname):
-    with open('machines.txt') as csv_file:
+    with open('machines.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         strReturn=""
         for row in csv_reader:
             if row[0] == hostname:
-#                print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
-                print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  NB_Disk={row[4]}  Taille_Disk={row[5]}Go  OS={getOsById(row[6])}')
+#               print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
+#               print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  NB_Disk={row[4]}  Taille_Disk={row[5]}Go  OS={getOsById(row[6])}')
+                print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  OS={getOsById(row[4])}')
+#               # Lecture des HDD
+                ListHddByHost(hostname)      
+#               print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  NB_Disk={row[4]} OS={getOsById(row[6])}')
 #                m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
 #                print('the row found is '+strReturn)
                 line_count += 1
 #               Ajouter l'echec de la recherche d'hote
 #               si host non trouver, relancer le menu 1
-                return True 
+#                return True 
 
     if line_count == 0:
 #        print ("Hostname NOT FOUND")
@@ -64,49 +72,114 @@ def readByName(hostname):
     return True
 
 def create(machine):
-    with open('machines.txt', mode='a',newline='') as new_host:
+    with open('machines.csv', mode='a',newline='') as new_host:
             machine_add = csv.writer(new_host, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            machine_add.writerow([machine.nom,machine.cpu,machine.ip,machine.ram,machine.hdd_nb,machine.hdd_size,machine.ops])
+            machine_add.writerow([machine.nom,machine.cpu,machine.ip,machine.ram,machine.ops])
+            #addHddByName(machine.nom)
+            addHddByName(hostname)
+
+    #addHddByName(machine)
+    
     return ''
     
 def createOrUpdate(machine):
     if find(machine.nom) >= 0:
         delete(machine.nom)
     create(machine)
+    addHddByName(hostname)
+#addHddByName(hostname)
     return ''
 
-def find(host):
-    with open('machines.txt', 'rt') as f:
+def find(hostname):
+    with open('machines.csv', 'rt') as f:
          reader = csv.reader(f, delimiter=',')
          line_count = -1
          line_found = -1
          for row in reader:
                 line_count +=1
-                if host == row[0]: # if the username shall be on column 3 (-> index 2)
+                if hostname == row[0]: # if the username shall be on column 3 (-> index 2)
 #                  print ('existe dans la colon N°'+str(line_count))
                   line_found = line_count
 #    print ('ligne trouver :'+str(line_found))
     return line_found
 
-def delete(host):
-    a_file = open("machines.txt", "r")
+def delete(hostname):
+    a_file = open("machines.csv", "r")
     lines = a_file.readlines()
     #print (lines)
     a_file.close()
-    
     #supprimer ligne
     # Ajouter la ligne a supprimer
     print ("Le Host suivant sera supprime/modifie")
-    readByName(host)
-    # print suppression de [find(host)] 
-    del lines[find(host)]
-    #ajouter un test si le host n'exite pas
-    #réecrir fichier apres suppression ligne
-    new_file = open("machines.txt", "w+")
+    readByName(hostname)
+    # print suppression de [find(host)]
+    deleteHddByName(hostname) 
+    del lines[find(hostname)]
+    new_file = open("machines.csv", "w+")
     for line in lines:
         new_file.write(line)
     new_file.close()
     return ''
+
+def deleteHddByName(hostname):
+    hd_file = open("hdd.csv", "r")
+    lines = hd_file.readlines()
+    #a_file.close()
+    print ("Les HDD suivants seront supprimes")
+    ListHddByHost(hostname)
+    # print suppression de [find(host)]
+    del lines[find(hostname)]
+    new_file = open("hdd.csv", "w+")
+    for line in lines:
+        new_file.write(line)
+    new_file.close()
+    return ''
+
+def addHddByName(hostname):
+#    hd_file = open("hdd.csv", "r")
+#    lines = hd_file.readlines()
+    #a_file.close()
+    List_Machine_HDD = [hostname]
+    print (List_Machine_HDD)
+
+    count = 1
+    more_disk = True
+    while more_disk == True :
+        boucle = (count)
+        print("disque numero : %s" %(boucle))      
+        #print("HDD numero " %(count))
+        # Si entreé egal vide fin liste HD a saisir
+        hdd_size = input("Saisir la taille du disque dur(en Go):")    
+        print ("On continue la Boucle True / Fasle")
+        print (more_disk)
+        print (count)
+        print ("taille du dernier disque")
+        print (hdd_size)
+        if (hdd_size == 0 or hdd_size ==''):
+            more_disk = False
+        else : 
+            List_Machine_HDD.append(hdd_size)
+    # Faire un liste LigneHDD = Hostname,<TailleHD>,+ajouter element HD N
+    # Supprimer les caracteres en trop dans la liste les " et ' 
+        count += 1
+    # sortie de la boucle de creation de HDD
+
+    print ("la nouvelle ligne dans HDD.csv")
+    print (List_Machine_HDD)
+    
+    with open('hdd.csv', mode='a',newline='') as new_host_hdd:
+            hdd_add = csv.writer(new_host_hdd, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            hdd_add.writerow([List_Machine_HDD])
+       
+    
+def addHddByName2(hostname):
+    hd_file = open("hdd.csv", "r")
+    lines = hd_file.readlines()
+    print ("Ajout de HDD a un hostname")
+    ListHddByHost(hostname)
+#
+#   Faire la procedure d'ajout
+#
 
 def getOsById(id):
     OS_Libel = ""
@@ -119,32 +192,6 @@ def getOsById(id):
     if len(OS_Libel) == 0:
         OS_Libel = "OS Non Disponible"    
     return OS_Libel
-
-def doublon(host):
-# fonction extraction premiere valuer du fichier machine (hostname)
-# Lit la première ligne du fichier (entête de colonnes)
-# pour avancer jusqu'à la ligne 2
-#    datafile.readline()
-    datafile = open('machines.txt', 'r')
-    
-    while True:
-        # Lecture d'une nouvelle ligne dans le fichier
-    #    with open('machines.txt') as csv_file:
-        line = datafile.readline()
-    # Si la ligne est vide, la fin du fichier a été atteinte
-        if line == '':
-            break
-    # Extraction des cellules de la ligne courante
-        value = line.split(',')
-      # Affichage de la cellule dans la 3ème colonne 
-# Comparaision de la valeur lu en 1er colonne avec la nouvelle valeur host
-# si existe alors doublon
-        exist=(value[0])
-        if exist == host:
-            return -1
-        else : 
-            return 0
-    datafile.close()
 
 
 class OPS_version:
@@ -170,9 +217,29 @@ def readLineOS(ops):
             print(line) 
             file.close()
    
+def ListHddByHost(hostname):
+            with open("hdd.csv", 'r') as csv_file2:
+                csv_reader2 = csv.reader(csv_file2, delimiter=',')
+                for row2 in csv_reader2 :
+#                   Equivalant a if hostname in row2:
+                    if row2[0] == hostname:
+            #                print (('{:<15}  {:<15}  {:<20}'.row2))
+                          
+                            print(("Liste des HDD de la machine"))
+ #                           print(('{:<8} {:<10}(Go){:<15}(Go){:<20}(Go)'.format(*row2)))
+                            print('         {:<8}(Go){:<8}(Go){:<8}(Go){:<8}'.format(*row2))
+                            print ("")
+                            print ("\n") 
+                	#print({row2[0]} {row2[1]}Go')
+                return True
+
 #########################
 #### INTERACTIVE ########
 #########################
+hdd_nb = int(1)
+print (hdd_nb)
+hostname = "host"
+#addHddByName(machine,hdd_nb)
 while True :
         
     print ("Ce program permet de gérer les hosts")
@@ -185,20 +252,19 @@ while True :
     if action == "1":
         #        os.system('cls')
         # print ("\n" * 100) pour foctionnement Universel 
-        search = False
-        while search == False :
-           hostname = input("Merci de saisir le hostname a afficher:")
-           search = bool(readByName(hostname))
-           print ("resultat de la recheche")
-           print (search) 
+        hostname = True
+        while not(hostname == "") :
+            hostname = input("Merci de saisir le hostname a afficher [Entrer vide pour revenir au menu]:")
+            search = bool(readByName(hostname))
+            #readByName(hostname)
+            #ListHddByHost(hostname)
+            # PREVOIR UNE SORTIE de la boucle Consulter
     elif action=="2":
         #        os.system('cls')
         # print ("\n" * 100) pour foctionnement Universel 
         print("Saisir les information de la machine a ajouter")
         hostname = input("Saisir nom du hote:")
-    #    TEst doublon() a faire
-    #    ip = input("Saisir l'adresse IP du hote:")
-    # TEST la validite IP   
+    #  TEST la validite IP   
     #   Boucle try exept pour validation de l'adresse IP
         while True:
             try:
@@ -209,26 +275,29 @@ while True :
             except ValueError:
                 print("Oops! Adresse IP Invalide. Merci de saisir une IP Valide ")
 
-        cpu = input("Saisir le nombre de CPU du hote:")
-        ram = input("Saisir la taille RAM du hote(en Mo):")
-        hdd_nb = input("Saisir le nb de disque dur du hote:")
-        hdd_size = input("Saisir la taille disque dur du hote (en Go):")
-        print("Saisir lOS et la version de la machine a ajouter choix de 1 a 25")
+        #cpu = input("Saisir le nombre de CPU du hote:")
+        #ram = input("Saisir la taille RAM du hote(en Mo):")
+        cpu = int(4)
+        ram = int(4096)
+        hdd_nb = int(3)
+        print (hdd_nb)
+        #hdd_size = int(input("Saisir la taille disque dur du hote (en Go):"))
+        hdd_size =int(1000)
+        #print("Saisir lOS et la version de la machine a ajouter choix de 1 a 25")
         # AFFICHER LE CONTENU DU FICHIER OS_version.txt
         # Choisir l OS et la Version 
         readOS()
-        ops = input("Saisir la version OS :")
+        #ops = input("Saisir la version OS :")
+        ops = int(15)
         # convertir la valeur OS/version 1-25 en champs caracteres OS et Version
         # prendre la ligne saisie (1-25)
         # enregistrer le 7eme champs (OPS) avec les champs 2 et 3 de OS_Version
         #print (ops)
         ops = int(ops)
-        #print (type(ops))
-        #ops_=readLineOS(ops)
-    #    ops_=readLineOS(ops)[-2]
-    #    ops_= ops+readLineOS(ops)[-1]
-            
-        machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
+        print (ops)
+        print (type(ops))
+        
+        machine = Machine(hostname,cpu,ip,ram,ops)
         createOrUpdate(machine)
 
     elif action=="3":
@@ -239,7 +308,6 @@ while True :
         #        os.system('cls')  # on windows
         print("Saisir les information de la machine a modifier, s'il n'existe pas il va êtres créer")
         hostname = input("Saisir nom du hote:")
-        #       readByName(hostname)
         print("****")
         cpu = input("Saisir le nombre de CPU du hote:")
         
@@ -254,8 +322,6 @@ while True :
             except ValueError:
                 print("Oops! Adresse IP Invalide. ")
         ram = input("Saisir la taille RAM du hote:")
-        hdd_nb = input("Saisir le nb de disque dur du hote:")
-        hdd_size = input("Saisir la taille des disques du hote:")
         readOS()
         ops = input("Saisir l'OS du hote:")
         # convertir la valeur OS/version 1-25 en champs caracteres OS et Version
@@ -263,5 +329,8 @@ while True :
         # enregistrer le 7eme champs (OPS) avec les champs 2 et 3 de OS_Version
         readLineOS(int(ops))
         
-        machine = Machine(hostname,cpu,ip,ram,hdd_nb,hdd_size,ops)
+        # supprimer hdd_nb et hdd_size dansla creation machine
+        machine = Machine(hostname,cpu,ip,ram,ops)
         createOrUpdate(machine)
+        
+        
