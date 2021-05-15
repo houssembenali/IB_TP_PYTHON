@@ -11,7 +11,6 @@ task dependances(type:Exec, dependsOn: purge) {
     ext.output = { return standardOutput.toString() }
 }
 
-
 def tarfile = "application-" + project.version
 
 task packageDistribution(type: Zip, dependsOn: dependances) {
@@ -26,3 +25,4 @@ task up(type:Exec, dependsOn: packageDistribution) {
  standardOutput = new ByteArrayOutputStream()
  ext.output = { return standardOutput.toString() }
 }
+
