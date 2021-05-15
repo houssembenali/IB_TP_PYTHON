@@ -33,14 +33,14 @@ class Hdd:
 
 
 def readAllv2():
-    
+ 
     with open('machines.csv') as csv_file:
-#        csv_reader = csv.reader(csv_file, delimiter=',')
+        csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         str_machine =""
         for row in csv_reader:
             #if line_count != 0:
-            m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+            m1 = Machine(row[0],row[1],row[2],row[3],row[4])
             str_machine =  str_machine + json.dumps(m1.__dict__)
             line_count += 1
     return str_machine
@@ -53,7 +53,6 @@ def readByName(hostname):
         strReturn=""
         for row in csv_reader:
             if row[0] == hostname:
-#               print(f'\t hostname={row[0]},nombre CPU={row[1]},ip={row[2]},RAM={row[3]},NB_Disk={row[4]},Taille_Disk={row[5]}Go,OS={row[6]} ')
 #               print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  NB_Disk={row[4]}  Taille_Disk={row[5]}Go  OS={getOsById(row[6])}')
                 print(f'\t hostname={row[0]}  nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  OS={getOsById(row[4])}')
 #               # Lecture des HDD
@@ -128,10 +127,13 @@ def deleteHddByName(hostname):
     print ("Les HDD suivants seront supprimes")
     ListHddByHost(hostname)
     # print suppression de [find(host)]
-    del lines[find(hostname)]
-    new_file = open("hdd.csv", "w+")
-    for line in lines:
-        new_file.write(line)
+
+    for row in reader:
+        if hostname != row['id']:
+            writer.writerow(row) ; # write all non-matching rows
+        else:
+            print("Avatar Record Deleted") # nothing to write
+
     new_file.close()
     return ''
 
@@ -150,15 +152,15 @@ def addHddByName(hostname):
         #print("HDD numero " %(count))
         # Si entreé egal vide fin liste HD a saisir
         hdd_size = input("Saisir la taille du disque dur(en Go):")    
-        print ("On continue la Boucle True / Fasle")
-        print (more_disk)
-        print (count)
-        print ("taille du dernier disque")
-        print (hdd_size)
+        print ("Entrée Vide pour finir la saisie des HDD :")
         if (hdd_size == 0 or hdd_size ==''):
             more_disk = False
         else : 
-            List_Machine_HDD.append(hdd_size)
+#            line = str(List_Machine_HDD)[1:-1]
+#            List_Machine_HDD.append(hdd_size)
+#            print (line)
+             List_Machine_HDD.append(hdd_size)
+
     # Faire un liste LigneHDD = Hostname,<TailleHD>,+ajouter element HD N
     # Supprimer les caracteres en trop dans la liste les " et ' 
         count += 1
@@ -168,8 +170,9 @@ def addHddByName(hostname):
     print (List_Machine_HDD)
     
     with open('hdd.csv', mode='a',newline='') as new_host_hdd:
+    #        hdd_add = csv.writer(new_host_hdd, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             hdd_add = csv.writer(new_host_hdd, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            hdd_add.writerow([List_Machine_HDD])
+            hdd_add.writerow(List_Machine_HDD)
        
     
 def addHddByName2(hostname):
@@ -237,8 +240,6 @@ def ListHddByHost(hostname):
 #### INTERACTIVE ########
 #########################
 hdd_nb = int(1)
-print (hdd_nb)
-hostname = "host"
 #addHddByName(machine,hdd_nb)
 while True :
         
@@ -246,7 +247,7 @@ while True :
     print ("FORMAT : nom, cpu, ip, ram, hdd, os/version")
     print (" ")
     print ("Tapez votre choix")
-    print ("1:afficher , 2:ajouter , 3:supprimer, 4:modifier")
+    print ("1:Consulter , 2:ajouter , 3:supprimer, 4:modifier 5:Lister ")
     action = input("")
 
     if action == "1":
@@ -333,4 +334,18 @@ while True :
         machine = Machine(hostname,cpu,ip,ram,ops)
         createOrUpdate(machine)
         
-        
+    elif action=="5":
+        print ("")
+        print ("\n") 
+ 
+        with open('machines.csv') as csv_file:
+            print("Liste de tout les Hosts :")
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            line_count = 0
+            str_machine =""
+            for row in csv_reader:
+             #   print (', '.join(row))        
+             #   print('         {:<8}(Go){:<8}(Go){:<8}(Go){:<8} OS={getOsById(row[4])}'.format(*row))
+                print(f'\t hostname={row[0]} nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  OS={getOsById(row[4])}')
+                        
+            print("****")
