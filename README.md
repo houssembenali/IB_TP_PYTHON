@@ -44,6 +44,16 @@ Nous avons élaborer un diagramme UML pour décrire notre application
 ![Screenshot](./UML/UML.png)
 *Diagramme UML*
 
+Les diagrammes de cas d'utilisation (DCU) sont des diagrammes UML utilisés pour une représentation du comportement fonctionnel d'un système logiciel. Ils sont utiles pour des présentations auprès de la direction ou des acteurs d'un projet, mais pour le développement, les cas d'utilisation sont plus appropriés.
+
+![Screenshot](./doc/uses_case.png)
+*Diagramme UML des cas d'utilisation de notre applicaton Gestion park informatique*
+
+Le diagramme de composants décrit l'organisation du système du point de vue des éléments logiciels comme les modules (paquetages, fichiers sources, bibliothèques, exécutables)
+
+![Screenshot](./UML/component_diagram.png)
+*Diagramme UML des composants de notre infrastructure*
+
 
 
 ## Configuration Jenkins
