@@ -10,7 +10,7 @@ Ceci est le TP demander par IB afin de manipuler les difféntes partie Jenkins, 
 - [./script/](./script/) : contient les scripts python de l'application de gestion Park Informatique
 - [./UML/](./UML/) : contient les roches pour la modélisation de la partie UML
 - [./VagrantFiles/](./VagrantFiles/) : contient les fichiers utiles pour déployer les machines virtuelles ainsi que leur scripts provision pour l'installation des prérequis
-  - [./VagrantFiles/IC-Gradle/](./VagrantFiles/IC-Gradle/) : à supprimer
+  - [./VagrantFiles/IC-Gradle/](./VagrantFiles/IC-Gradle/) : ~~ à supprimer~~
   - [./VagrantFiles/IC-Jenkins/](./VagrantFiles/IC-Jenkins/) : gérer la machine virtuelle de Jenkins
   - [./VagrantFiles/IC-Nexus/](./VagrantFiles/IC-Nexus/) : gérer la machine virtuelle de Nexus 
 - [./doc/](./doc/) : contient les fichier et image utile a la documentation et l'alimentation du fichier readme.me
@@ -37,6 +37,13 @@ l'application va être executer sous le port 5000
 
 ## API
 [Fichier déscriptif des service REST API de notre application Pythin](doc/export_postman_python_TP.json)
+
+## Diagramme UML
+Nous avons élaborer un diagramme UML pour décrire notre application
+
+![Screenshot](./UML/UML.png)
+*Diagramme UML*
+
 
 
 ## Configuration Jenkins
