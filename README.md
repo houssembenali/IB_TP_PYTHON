@@ -1,3 +1,5 @@
+![Projet Gestion Park Informatique](doc/banner.PNG)
+
 # IB_TP_PYTHON
 Ceci est le TP demander par IB
 
