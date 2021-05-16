@@ -5,3 +5,4 @@ VagrantFiles/IC-Nexus/.vagrant/
 .vs/
 Data/
 __pycache__/
+script/__pycache__
