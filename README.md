@@ -13,10 +13,16 @@ Ceci est le TP demander par IB afin de manipuler les difféntes partie Jenkins, 
   - [./VagrantFiles/IC-Gradle/](./VagrantFiles/IC-Gradle/) : ~~ à supprimer~~
   - [./VagrantFiles/IC-Jenkins/](./VagrantFiles/IC-Jenkins/) : gérer la machine virtuelle de Jenkins
   - [./VagrantFiles/IC-Nexus/](./VagrantFiles/IC-Nexus/) : gérer la machine virtuelle de Nexus 
+Pour déployer les machines virtuelles, il suffit juste de se situer sur le dossier contenant le fichier 'vagrantfile' puis lancer la commande ci-dessous (l'installation vagrant sur la machine nécessaire) :
+```console
+hoos@ib:~$ vagrant up
+```
 - [./doc/](./doc/) : contient les fichier et image utile a la documentation et l'alimentation du fichier readme.me
 ### fichier BUILD
 - [build.gradle](build.gradle)  : fichier gradle qui permet a faire le BUILD de l'application.Ce fichier gradle va nous permetre a vider les dossiers et fichier temporaire, installation des dépendance, packaging, le stockage sur le répository Nexus et l'execussion des test unitaire. Le lancement ce fait en tapant la commande ci-dessous:
-hoos@~$ gradle runpy 
+```console
+hoos@ib:~$ gradle runpy 
+```
 - [gradle.properties](gradle.properties) : ce fichier va nous permettre la gérer la version de l'application python à builder.
 ### fichier de l'application
 - [./script/nexusAPI.py](./script/nexusAPI.py) : ce script va nous afficher les versions de notre application existante sur Nexus OSS Repository à l'aide de l'API
@@ -43,6 +49,16 @@ Nous avons élaborer un diagramme UML pour décrire notre application
 
 ![Screenshot](./UML/UML.png)
 *Diagramme UML*
+
+Les diagrammes de cas d'utilisation (DCU) sont des diagrammes UML utilisés pour une représentation du comportement fonctionnel d'un système logiciel. Ils sont utiles pour des présentations auprès de la direction ou des acteurs d'un projet, mais pour le développement, les cas d'utilisation sont plus appropriés.
+
+![Screenshot](./doc/uses_case.png)
+*Diagramme UML des cas d'utilisation de notre applicaton Gestion park informatique*
+
+Le diagramme de composants décrit l'organisation du système du point de vue des éléments logiciels comme les modules (paquetages, fichiers sources, bibliothèques, exécutables)
+
+![Screenshot](./UML/component_diagram.png)
+*Diagramme UML des composants de notre infrastructure*
 
 
 
