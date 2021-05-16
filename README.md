@@ -1,7 +1,9 @@
+# IB_TP_PYTHON
+Ceci est le TP demander par IB afin de manipuler les difféntes partie Jenkins, Python, Linux, Vagrant, UML, Gradle, Nexus
+
 ![Projet Gestion Park Informatique](doc/banner.PNG)
 
-# IB_TP_PYTHON
-Ceci est le TP demander par IB
+
 
 ##Structure du projet 
 ### Les répertoir 
