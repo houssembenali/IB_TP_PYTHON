@@ -31,6 +31,9 @@ hoos@~$ gradle runpy
 
 l'application va être executer sous le port 5000
 
+### fichier XML Jenkins
+[./doc/Job_Jenkins_config.xml](./doc/Job_Jenkins_config.xml) : fichier XML décrivant le pipeline du Job Jenkins que vous pouvez l'importer dans votre serveur Jenkins pour l'executer aprés. 
+
 ## API
 [Fichier déscriptif des service REST API de notre application Pythin](doc/export_postman_python_TP.json)
 
