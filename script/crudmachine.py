@@ -2,25 +2,13 @@ import csv
 import unittest
 import json
 from flask import Flask, jsonify,request
+import objectsmachine
 #convert to JSON string
 #jsonStr = json.dumps(laptop1.__dict__)
 
 
 
 
-####################
-###### CLASS #######
-####################
-
-class Machine:
-  def __init__(self, nom, ip,cpu,ram,hdd,os):
-    self.nom= nom
-    self.ip = ip
-    self.cpu= cpu
-    self.ram= ram
-    # nbr disque a ajouter ##TODO
-    self.hdd= hdd
-    self.os = os
 
     
 
@@ -57,7 +45,7 @@ def readAllv2():
         str_machine =""
         for row in csv_reader:
             #if line_count != 0:
-            m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5])
+            m1 = objectsmachine.Machine(row[0],row[1],row[2],row[3],row[4],row[5])
             str_machine =  str_machine + json.dumps(m1.__dict__)
             line_count += 1
     return str_machine
@@ -72,7 +60,7 @@ def readByName(hostname):
         for row in csv_reader:
             if row[0] == hostname:
                 print(f'\t hostname={row[0]}, ip={row[1]}, nombre CPU={row[2]}, RAM={row[3]}, HardDisk={row[4]}, OS={row[5]} ')
-                m1 = Machine(row[0],row[1],row[2],row[3],row[4],row[5])
+                m1 = objectsmachine.Machine(row[0],row[1],row[2],row[3],row[4],row[5])
                 print('the row found is '+strReturn)
                 line_count += 1
 
