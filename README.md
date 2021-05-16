@@ -61,8 +61,16 @@ Le diagramme de composants décrit l'organisation du système du point de vue de
 *Diagramme UML des composants de notre infrastructure*
 
 
+## Configuration Nexus OSS Repository
+Addresse IP : 192.168.1.144:8081
+
+Pour ajouter un nouveau repository des fichiers ZIP il suffit d'aller au menu configuration, puis clicker sur repository puis clicker sur "New Repository" puis séléctionner sur "raw (hosted)" puis taper le nom du repository, ici "nexus-tpp",ensuite laisser tous les par défaut avant de clicker sur OK
+
+![Screenshot](./doc/nexus_ajout.PNG)
+*Imprime écrant illustrant comment ajouter un Répository sur Nexus OSS*
 
 ## Configuration Jenkins
+Addresse IP : 192.168.1.114:8080
 
 ### Configuration prérequis Jenkins
 Nous avons indiquer l'addresse relative de l'application Gradle pour que Jenkins réussie a executer la commande gradle.
