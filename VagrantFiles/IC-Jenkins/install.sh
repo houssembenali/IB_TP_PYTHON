@@ -12,7 +12,9 @@ export DEBIAN_FRONTEND=noninteractive
     sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
         /etc/apt/sources.list.d/jenkins.list'
     sudo apt -y update
-    sudo apt -y install jenkins
+    # installation de jenkins + python + pip + unzip
+	sudo apt -y install jenkins python3-pip unzip
+	
 
 ## Démarrer le service Jenkins
 
@@ -30,6 +32,13 @@ sudo useradd -m userjob -d /home/userjob
 ## Lui donner les permissions (via le fichier sudoers) d'utiliser apt (et seulement apt pas l'ensemble des droits admin)
 
 echo 'userjob ALL=(ALL:ALL) /usr/bin/apt' | sudo EDITOR='tee -a' visudo
+
+# installation gradle
+	sudo wget https://downloads.gradle-dn.com/distributions/gradle-7.0.2-bin.zip
+	sudo mkdir /opt/gradle
+	sudo unzip -d /opt/gradle gradle-7.0.2-bin.zip
+	
+
 
 ## Afficher à la fin de l'execution du script le contenu du fichier /var/jenkins_home/secrets/initialAdminPassword pour permettre de récupérer le mot de passe
 
