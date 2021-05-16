@@ -19,7 +19,8 @@ Ceci est le TP demander par IB afin de manipuler les difféntes partie Jenkins, 
 hoos@~$ gradle runpy 
 - [gradle.properties](gradle.properties) : ce fichier va nous permettre la gérer la version de l'application python à builder.
 ### fichier de l'application
-- [.script/apimachine.py](script/apimachine.py) : ce script est la couche API de l'application Python gestion park informatique qui va êtres éxecuter via le framework Flask
+- [./script/nexusAPI.py](./script/nexusAPI.py) : ce script va nous afficher les versions de notre application existante sur Nexus OSS Repository à l'aide de l'API
+- [./script/apimachine.py](./script/apimachine.py) : ce script est la couche API de l'application Python gestion park informatique qui va êtres éxecuter via le framework Flask
 - [./script/crudmachine.py](./script/crudmachine.py) : ce script est la couche buisness de l'application Python gestion park informatique. c'est le coeur de l'application qui va êtres appeler par tous les autre couches de notre application Python.
 - [./script/interactivemachine.py](./script/interactivemachine.py) : c'est la partie qui va garantir l'interaction avec l'utilisateur pour exploiter les services de notre application via les ligne de commande.
 - [./script/launchAPI.py](./script/launchAPI.py) : A supprimer. BUT : tentative d'executer le serveur Flask dans un autre Thread sans blocké Gradle.
