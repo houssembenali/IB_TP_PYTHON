@@ -120,7 +120,7 @@ def delete(hostname):
     new_file.close()
     return ''
 
-def deleteHddByName(hostname):
+def deleteHddByNameV2(hostname):
     hd_file = open("hdd.csv", "r")
     lines = hd_file.readlines()
     #a_file.close()
@@ -136,13 +136,28 @@ def deleteHddByName(hostname):
 
     new_file.close()
     return ''
+def deleteHddByName(hostname):
+    hd_file = open("hdd.csv", "r")
+    lines = hd_file.readlines()
+    #print (lines)
+    hd_file.close()
+    #supprimer ligne
+    # Ajouter la ligne a supprimer
+    print ("suppression des HDD")
+    # print suppression de [find(host)]
+    del lines[find(hostname)]
+    new_file = open("hdd.csv", "w+")
+    for line in lines:
+        new_file.write(line)
+    new_file.close()
+    return ''
 
 def addHddByName(hostname):
 #    hd_file = open("hdd.csv", "r")
 #    lines = hd_file.readlines()
     #a_file.close()
     List_Machine_HDD = [hostname]
-    print (List_Machine_HDD)
+    #print (List_Machine_HDD)
 
     count = 1
     more_disk = True
@@ -153,10 +168,18 @@ def addHddByName(hostname):
         # Si entreé egal vide fin liste HD a saisir
         hdd_size = input("Saisir la taille du disque dur(en Go):")    
         print ("Entrée Vide pour finir la saisie des HDD :")
-        if (hdd_size == 0 or hdd_size ==''):
+        print (type(hdd_size))
+        print (hdd_size)
+        
+        if (hdd_size == '' or hdd_size ==0 or hdd_size =='0'):
+            print ("dans la boucle fin hdd ?")
+            print (hdd_size)
+            print ("Alors on sort ?")
             more_disk = False
-        else : 
-#            line = str(List_Machine_HDD)[1:-1]
+            print ("alors ? More disk a saisir ?")
+            print (more_disk)
+        
+        elif (int(hdd_size) > 1) : 
 #            List_Machine_HDD.append(hdd_size)
 #            print (line)
              List_Machine_HDD.append(hdd_size)
@@ -344,8 +367,9 @@ while True :
             line_count = 0
             str_machine =""
             for row in csv_reader:
-             #   print (', '.join(row))        
-             #   print('         {:<8}(Go){:<8}(Go){:<8}(Go){:<8} OS={getOsById(row[4])}'.format(*row))
-                print(f'\t hostname={row[0]} nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  OS={getOsById(row[4])}')
+            #   print (', '.join(row))        
+            #   print('         {:<8}(Go){:<8}(Go){:<8}(Go){:<8} OS={getOsById(row[4])}'.format(*row))
+            #   print(f'\t hostname={row[0]} nombre CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  OS={getOsById(row[4])}')
+                print(f'\t hostname={row[0]}  nb CPU={row[1]}  ip={row[2]}  Ram={row[3]}Mo  OS={getOsById(row[4])}')
                         
             print("****")
