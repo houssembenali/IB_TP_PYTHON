@@ -1,3 +1,5 @@
+![Projet Gestion Park Informatique](doc/banner.PNG)
+
 # IB_TP_PYTHON
 Ceci est le TP demander par IB
 
@@ -21,6 +23,8 @@ hoos@~$ gradle runpy
 - [./script/launchAPI.py](./script/launchAPI.py) : A supprimer. BUT : tentative d'executer le serveur Flask dans un autre Thread sans blocké Gradle.
 - [./script/objectsmachine.py](./script/objectsmachine.py) : ce script est la couche model de notre application, il permet de déclarer les différents objets nécessaires pour tous les couche de l'application Gestion Park Informatique 
 - [./script/unitestmachine.py](./script/unitestmachine.py) : ce script est la couche test de notre application, il va executer les Test Unitaire liée cette application. Ce dérnier va être appeler par Gradle.
+
+l'application va être executer sous le port 5000
 
 ## API
 [Fichier déscriptif des service REST API de notre application Pythin](doc/export_postman_python_TP.json)
