@@ -1,5 +1,6 @@
 from flask import Flask, jsonify,request
 import crudmachine
+import objectsmachine
 
 #############################
 ########### API #############
@@ -25,7 +26,7 @@ def createAPI():
    ram= data.get('ram', '')
    hdd= data.get('hdd', '')
    os= data.get('os', '')
-   m1 = crudmachine.Machine(nom,ip,cpu,ram,hdd,os)
+   m1 = objectsmachine.Machine(nom,ip,cpu,ram,hdd,os)
    crudmachine.createOrUpdate(m1)
    return "Creation de l'hote "+nom+" est enregistrer avec succée !!"
 
