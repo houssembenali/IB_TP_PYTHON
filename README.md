@@ -5,13 +5,13 @@ Ceci est le TP demander par IB
 
 ##Structure du projet 
 ### Les répertoir 
-- .script/ : contient les scripts python de l'application de gestion Park Informatique
-- .UML/ : contient les roches pour la modélisation de la partie UML
-- .VagrantFiles/ : contient les fichiers utiles pour déployer les machines virtuelles ainsi que leur scripts provision pour l'installation des prérequis
-  - .VagrantFiles/IC-Gradle/ : à supprimer
-  - .VagrantFiles/IC-Jenkins/ : gérer la machine virtuelle de Jenkins
-  - .VagrantFiles/IC-Nexus/ : gérer la machine virtuelle de Nexus 
-- .doc/ : contient les fichier et image utile a la documentation et l'alimentation du fichier readme.me
+- ./script/ : contient les scripts python de l'application de gestion Park Informatique
+- ./UML/ : contient les roches pour la modélisation de la partie UML
+- ./VagrantFiles/ : contient les fichiers utiles pour déployer les machines virtuelles ainsi que leur scripts provision pour l'installation des prérequis
+  - ./VagrantFiles/IC-Gradle/ : à supprimer
+  - ./VagrantFiles/IC-Jenkins/ : gérer la machine virtuelle de Jenkins
+  - ./VagrantFiles/IC-Nexus/ : gérer la machine virtuelle de Nexus 
+- ./doc/ : contient les fichier et image utile a la documentation et l'alimentation du fichier readme.me
 ### fichier BUILD
 - build.gradle : fichier gradle qui permet a faire le BUILD de l'application.Ce fichier gradle va nous permetre a vider les dossiers et fichier temporaire, installation des dépendance, packaging, le stockage sur le répository Nexus et l'execussion des test unitaire. Le lancement ce fait en tapant la commande ci-dessous:
 hoos@~$ gradle runpy 
