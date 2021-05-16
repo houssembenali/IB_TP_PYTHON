@@ -23,6 +23,9 @@ hoos@~$ gradle runpy
 - [./script/launchAPI.py](./script/launchAPI.py) : A supprimer. BUT : tentative d'executer le serveur Flask dans un autre Thread sans blocké Gradle.
 - [./script/objectsmachine.py](./script/objectsmachine.py) : ce script est la couche model de notre application, il permet de déclarer les différents objets nécessaires pour tous les couche de l'application Gestion Park Informatique 
 - [./script/unitestmachine.py](./script/unitestmachine.py) : ce script est la couche test de notre application, il va executer les Test Unitaire liée cette application. Ce dérnier va être appeler par Gradle.
+- [./script/OS_version.txt](./script/OS_version.txt) : ce fichier est un fichier persistant qui contient la liste des OS pour les affecter au host lors des mise à jour des machine
+- [./script/hdd.csv](./script/hdd.csv) : ce fichier est un fichier persistant qui contient la liste des dique dure liée au différente machines affecter lors des mise à jour des machine
+- [./script/machines.csv](./script/machines.csv) : ce fichier est un fichier persistant qui contient la liste des machinesmanipuler lors des mise à jour des machines
 
 l'application va être executer sous le port 5000
 
